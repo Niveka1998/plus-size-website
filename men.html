@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles2.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="women.css" />
+</head>
+<body>
+    <nav class="navbar">
+    <div class="logo">3XL Clothing</div>
+    <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="women.html">Women</a></li>
+        <li><a href="men.html">Men</a></li>
+
+      <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+    </nav>
+
+    <nav class="breadcrumb" id="breadcrumb"></nav>
+
+    <div class="image-container">
+  <img src="img/ove (2).png" alt="Description" class="responsive-image">
+</div>
+
+
+     <div id="product-list" class="products"></div>
+
+         <div id="product-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <div class="slider-container">
+      <button class="slider-btn left">&#10094;</button>
+      <img id="modal-image" src="" alt="Product Image" />
+      <button class="slider-btn right">&#10095;</button>
+    </div>
+    <h3 id="modal-title"></h3>
+    <p id="modal-desc"></p>
+    <p><strong id="modal-price"></strong></p>
+
+    <div class="selectors">
+      <div>
+        <strong>Colors:</strong>
+        <div id="modal-colors"></div>
+      </div>
+      <div>
+        <strong>Sizes:</strong>
+        <select id="modal-sizes"></select>
+      </div>
+    </div>
+
+    <button id="modal-add-btn" class="add-to-cart-btn">Add to Cart</button>
+  </div>
+</div>
+
+
+      <footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <h3>About Us</h3>
+      <p>Your go-to store for the latest fashion trends, accessories, and seasonal styles. We bring elegance and comfort to your wardrobe.</p>
+    </div>
+    
+    <div class="footer-column">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/women.html">Women</a></li>
+        <li><a href="/men.html">Men</a></li>
+        <li><a href="/cart.html">Cart</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-column">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="#"><img src="/img/fbicon.jpg" alt="Facebook" /></a>
+        <a href="#"><img src="/img/instaicon.jpg" alt="Instagram" /></a>
+        <a href="#"><img src="/img/twiticon.jpg" alt="Twitter" /></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 3XL store. All rights reserved.</p>
+  </div>
+</footer>
+
+    <script>
+function addToCart(productId, color = null, size = null) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  const existingItem = cart.find(item => item.id === productId && item.color === color && item.size === size);
+
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({ id: productId, color, size, quantity: 1 });
+  }
+
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+  showCartToast('Product added to cart!');
+}
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  const count = cart.reduce((sum, item) => {
+    const qty = parseInt(item.quantity, 10);
+    return item.id && !isNaN(qty) && qty > 0 ? sum + qty : sum;
+  }, 0);
+
+  const cartCountElem = document.getElementById('cart-count');
+  if (cartCountElem) {
+    cartCountElem.textContent = count;
+  }
+}
+
+function showCartToast(message) {
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = 'cart-toast';
+  toast.innerHTML = `
+    <span>${message}</span>
+    <a href="cart.html" class="view-cart-link">View Cart</a>
+  `;
+  
+  // Add to body
+  document.body.appendChild(toast);
+  
+  // Show toast
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 10);
+  
+  // Hide after 3 seconds
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// Call this once on page load to update cart count in navbar
+updateCartCount();
+</script>
+
+
+
+    <!-- Firebase v8 (browser compatible) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="breadcrumb.js"></script>
+    <script src="men.js"></script>
+
+    <script>
+  function openModal(id) {
+    document.getElementById(id).style.display = 'block';
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+  }
+
+  function switchModal(fromId, toId) {
+    closeModal(fromId);
+    openModal(toId);
+  }
+
+  // Close modals when clicking outside
+  window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+      event.target.style.display = 'none';
+    }
+  };
+
+ 
+</script>
+</body>
+</html>

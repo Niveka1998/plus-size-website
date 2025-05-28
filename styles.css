@@ -1,0 +1,258 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f4f1f8; /* Soft purple-gray background */
+}
+
+.products {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.product-card {
+  background: #fff;
+  border: 1px solid #d1c4e9; /* light purple border */
+  width: 250px;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(122, 92, 157, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(106, 27, 154, 0.3); /* deeper purple */
+}
+
+.product-card img {
+  width: 100%;
+  height: 250px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.product-card h3 {
+  margin: 10px 0 5px;
+  color: #6a1b9a; /* deep purple */
+  font-size: 20px;
+}
+
+.product-card p {
+  font-size: 14px;
+  color: #555;
+}
+
+.view-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 16px;
+  background-color: #6a1b9a;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.view-btn:hover {
+  background-color: #8e24aa;
+  transform: scale(1.05);
+}
+
+.add-to-cart-btn {
+  background-color: #f9f5fc;
+  color: #fff;
+  border: 2px solid rgb(85, 0, 128);
+  padding: 10px 18px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(106, 27, 154, 0.2);
+  color: #6A1B9A;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #fff;
+  color: #6A1B9A;
+  border-color: #6A1B9A;
+  box-shadow: 0 6px 12px rgba(106, 27, 154, 0.3);
+  transform: scale(1.03);
+}
+
+.color-container {
+  margin: 10px 0;
+  display: flex;
+  gap: 6px;
+}
+
+.color-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  display: inline-block;
+}
+
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  width: 500px;
+  max-width: 90%;
+  border-radius: 10px;
+  position: relative;
+  text-align: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px; right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.slider-container {
+  position: relative;
+}
+
+.slider-container img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+
+#modal-colors {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+#modal-colors .color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ccc;
+}
+
+#modal-colors .selected {
+  border-color: black;
+}
+
+#modal-sizes {
+  padding: 6px;
+  border-radius: 5px;
+}
+
+/* Make sure the modal is initially hidden */
+#product-modal {
+  display: none;
+}
+
+#product-modal:not(.hidden) {
+  display: flex;
+}
+
+/* Style for the view button */
+.view-btn {
+  background: #5e108f;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+/* Make sure the modal is initially hidden */
+#product-modal {
+  display: none;
+}
+
+#product-modal:not(.hidden) {
+  display: flex;
+}
+
+
+.view-btn:hover {
+  background: #9e85e6;
+}
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.slider-btn::after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-top: 2px solid white;
+  border-right: 2px solid white;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+.slider-btn.left::after {
+  transform: rotate(-135deg);
+  left: 8px;
+}
+
+.slider-btn.right::after {
+  transform: rotate(45deg);
+  right: 8px;
+}
+
+.slider-btn:hover::after {
+  border-color: #f8f8f8;
+}
+
+.slider-container {
+  position: relative;
+}
+
+.slider-container:hover .slider-btn {
+  opacity: 1;
+}
+
+.slider-btn {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #fff;
+  color: #6A1B9A;
+  border-color: #6A1B9A;
+  box-shadow: 0 6px 12px rgba(106, 27, 154, 0.3);
+  transform: scale(1.03);
+}

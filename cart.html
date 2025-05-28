@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cart - 3XL Clothing</title>
+  <link rel="stylesheet" href="styles2.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+
+  <style>
+    /* Cart container */
+#cart-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #eacbf3;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* Each cart item */
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  gap: 15px;
+}
+
+/* Product image */
+.cart-item img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid #a068d8;
+}
+
+/* Product name */
+.cart-item > div:nth-child(2) {
+  flex: 2;
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Price per item */
+.cart-item > div:nth-child(3) {
+  flex: 1;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+/* Quantity input */
+.qty-input {
+  width: 50px;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Total price for item */
+.cart-item > div:nth-child(5) {
+  flex: 1;
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+  color: #222;
+}
+
+/* Remove button */
+.remove-btn {
+  background-color: #8220ac;
+  color: white;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+}
+
+.remove-btn:hover {
+  background-color: #e60000;
+}
+
+/* Cart total */
+.cart-total {
+  text-align: right;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 15px 10px 5px;
+  color: #111;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+  </style>
+
+  <style>
+    /* Cart Styles */
+.cart-item {
+  display: flex;
+  gap: 20px;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item-img {
+  width: 120px;
+}
+
+.cart-item-img img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.quantity-control button {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  background: #f8f8f8;
+  cursor: pointer;
+}
+
+.color-display {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  margin-right: 5px;
+}
+
+.cart-totals {
+  padding: 20px;
+  background: #f8f8f8;
+  margin-top: 20px;
+}
+
+.cart-totals div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 12px;
+  background: #4a00e0;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+/* Toast notifications */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1000;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+.toast.success {
+  background: #4CAF50;
+}
+
+.toast.error {
+  background: #F44336;
+}
+  </style>
+ 
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">3XL Clothing</div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="women.html">Women</a></li>
+      <li><a href="men.html">Men</a></li>
+      <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <nav class="breadcrumb" id="breadcrumb">Home / Cart</nav>
+
+ <div id="cart-container"></div>
+
+ <div id="checkout-form" class="checkout-form" style="display: none;">
+  <h2>Checkout</h2>
+  
+  <form id="checkoutDetails">
+    <fieldset>
+      <legend>Personal Details</legend>
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+
+      <label for="address">Address:</label>
+      <textarea id="address" required></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>Payment Details</legend>
+      <label for="card-number">Card Number:</label>
+      <input type="text" id="card-number" required>
+
+      <label for="expiry">Expiry Date:</label>
+      <input type="month" id="expiry" required>
+
+      <label for="cvv">CVV:</label>
+      <input type="text" id="cvv" required>
+    </fieldset>
+
+    <button type="submit">Place Order</button>
+  </form>
+</div>
+
+
+ <!-- On your product listing page -->
+<div id="product-list"></div>
+ <button id="checkout-btn" class="checkout-button">Proceed to Checkout</button>
+
+
+
+
+
+  <!-- Firebase v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="breadcrumb.js"></script>
+  <script>
+    function addToCart(productId) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+  const existingItem = cart.find(item => item.id === productId);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({ id: productId, quantity: 1 });
+  }
+  
+  localStorage.setItem('cart', JSON.stringify(cart));
+  
+  updateCartCount();
+  showToast('Product added to cart!');
+}
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const cartCountElem = document.getElementById('cart-count');
+  if (cartCountElem) {
+    cartCountElem.textContent = count;
+  }
+}
+
+// Call this once on page load to update cart count in navbar
+updateCartCount();
+  </script>
+<script>
+  // Initialize EmailJS
+  emailjs.init({
+    publicKey: 'lwsl2VRJTNSDAtl4e'
+  });
+  
+  function getOrderItemsHTML() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (cart.length === 0) return '<p>No items in cart.</p>';
+
+  let html = '';
+  cart.forEach(item => {
+    html += `
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+        <tbody>
+          <tr style="vertical-align: top;">
+            <td style="padding: 8px; width: 80px;">
+              <img style="height: 64px;" src="${item.image_url || ''}" alt="item image" />
+            </td>
+            <td style="padding: 8px;">
+              <div>${item.name}</div>
+              <div style="font-size: 14px; color: #888;">QTY: ${item.quantity || 1}</div>
+            </td>
+            <td style="padding: 8px; white-space: nowrap; text-align: right;">
+              <strong>$${(item.price * (item.quantity || 1)).toFixed(2)}</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>`;
+  });
+  return html;
+}
+
+
+  // Helper functions
+  function generateOrderId() {
+    return 'ORD-' + Math.floor(Math.random() * 1000000);
+  }
+
+  function getCartItemCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    return cart.reduce((sum, item) => sum + item.quantity, 0);
+  }
+
+  function calculateTotalPrice() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+  }
+
+
+  // Handle form submit
+  document.getElementById('checkoutDetails').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Get input values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+
+    // Generate order data
+    const order_id = generateOrderId();
+    const units = getCartItemCount();
+    const cost_total = calculateTotalPrice();
+
+   const templateParams = {
+  order_id: order_id,
+  name: name,
+  email: email,
+  units: units,
+  cost_total: cost_total,
+  order_items_html: getOrderItemsHTML()
+};
+
+    // Send email
+    emailjs.send('service_nnhb9fu', 'template_yypniue', templateParams)
+      .then(() => {
+        alert('Order placed! Confirmation email sent.');
+        localStorage.removeItem('cart');
+        window.location.href = 'home.html';
+      })
+      .catch((error) => {
+        console.error('EmailJS failed:', error);
+        alert('Failed to send email.');
+      });
+  });
+
+  // Show checkout form
+  document.getElementById('checkout-btn').addEventListener('click', function () {
+    document.getElementById('checkout-form').style.display = 'block';
+    window.scrollTo({ top: document.getElementById('checkout-form').offsetTop, behavior: 'smooth' });
+  });
+</script>
+
+
+
+<script src="cart.js"></script>
+</body>
+</html>

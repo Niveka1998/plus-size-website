@@ -1,0 +1,23 @@
+.image-container {
+  width: 100%;
+  overflow: hidden; /* Prevents any overflow */
+  position: relative; /* For absolute positioning if needed */
+ 
+}
+
+.responsive-image {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Removes extra space below image */
+  max-width: 100%; /* Prevents stretching beyond original size */
+  margin-bottom: 30px;
+}
+
+/* For full viewport height images */
+.fullscreen-image {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  
+}

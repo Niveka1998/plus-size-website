@@ -1,0 +1,63 @@
+[
+  {
+    "id": 1,
+    "name": "Plus Size Floral Dress",
+    "price": 29.99,
+    "image": "img/images.jpg",
+    "description": "Comfortable and stylish floral print dress for plus-size women.",
+    "colors": ["#6a1b9a", "#ff4081", "#fff176"],
+    "images": ["img/images.jpg", "img/images1.jpg", "img/images2.jpg"],
+    "sizes": ["3XL", "4XL"]
+  },
+  {
+    "id": 2,
+    "name": "Casual Plus Size Jeans",
+    "price": 34.99,
+    "image": "img/images1.jpg",
+    "description": "High-waisted denim jeans for a confident everyday look.",
+    "colors": ["#6a1b9a", "#ff4081", "#fff176"],
+    "images": ["img/images.jpg", "img/images.jpg", "img/images.jpg"],
+    "sizes": ["3XL", "4XL"]
+  },
+  {
+    "id": 3,
+    "name": "Oversized T-Shirt",
+    "price": 19.99,
+    "image": "img/images2.jpg",
+    "description": "Breathable cotton t-shirt for relaxed comfort.",
+    "colors": ["#6a1b9a", "#ff4081", "#fff176"],
+    "images": ["img/images.jpg", "img/images.jpg", "img/images.jpg"],
+    "sizes": ["3XL", "4XL"]
+  },
+  {
+    "id": 4,
+    "name": "Oversized T-Shirt",
+    "price": 19.99,
+    "image": "img/images2.jpg",
+    "description": "Breathable cotton t-shirt for relaxed comfort.",
+    "colors": ["#6a1b9a", "#ff4081", "#fff176"],
+    "images": ["img/images.jpg", "img/images.jpg", "img/images.jpg"],
+    "sizes": ["3XL", "4XL"]
+  },
+  {
+    "id": 5,
+    "name": "Oversized T-Shirt",
+    "price": 19.99,
+    "image": "img/images2.jpg",
+    "description": "Breathable cotton t-shirt for relaxed comfort.",
+    "colors": ["#6a1b9a", "#ff4081", "#fff176"],
+    "images": ["img/images.jpg", "img/images.jpg", "img/images.jpg"],
+    "sizes": ["3XL", "4XL"]
+  },
+  {
+    "id": 6,
+    "name": "Oversized T-Shirt",
+    "price": 19.99,
+    "image": "img/images2.jpg",
+    "description": "Breathable cotton t-shirt for relaxed comfort.",
+    "colors": ["#6a1b9a", "#ff4081", "#fff176"],
+    "images": ["img/images.jpg", "img/images.jpg", "img/images.jpg"],
+    "sizes": ["3XL", "4XL"]
+  }
+
+]
